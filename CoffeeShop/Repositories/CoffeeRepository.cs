@@ -26,15 +26,15 @@ namespace CoffeeShop.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Id, Title, BeanVarietyId, b.Name as [beanName], b.Region [beanRegion] FROM Coffee c" +
-                        "               LEFT JOIN BeanVariety b on c.BeanVarietyId = b.id";
+                    cmd.CommandText = @"SELECT c.Id as coffeeId, Title, BeanVarietyId, b.Name as [beanName], b.Region[beanRegion], b.Notes as Notes FROM Coffee c
+          LEFT JOIN BeanVariety b on c.BeanVarietyId = b.id";
                     var reader = cmd.ExecuteReader();
                     var coffees = new List<Coffee>();
                     while (reader.Read())
                     {
                         var coffee = new Coffee()
                         {
-                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Id = reader.GetInt32(reader.GetOrdinal("coffeeId")),
                             Title = reader.GetString(reader.GetOrdinal("Title")),
                             BeanVarietyId = reader.GetInt32(reader.GetOrdinal("BeanVarietyId")),
                             BeanVariety = new BeanVariety()
