@@ -1,13 +1,29 @@
-const url = "https://localhost:5001/api/BeanVariety/";
-
+const url = "https://localhost:5001/api/Coffee";
+const dropHere = document.getElementById("coffeesHere")
 const button = document.querySelector("#run-button");
 button.addEventListener("click", () => {
-    getAllBeanVarieties()
-        .then(beanVarieties => {
-            console.log(beanVarieties);
-        })
-});
+    console.log("before calling")
+    GetCoffees()
+        .then(array => {
+            array.map(coffee => {
+                dropHere.innerHTML = CoffeeDisplay(coffee)
+            }
 
-function getAllBeanVarieties() {
+            )
+
+        })
+})
+
+
+
+const CoffeeDisplay = (coffeeObject) => {
+    return `
+    <div class="coffee">
+        <h2>${coffeeObject.Title}</h3>
+    </div>`
+}
+
+function GetCoffees() {
     return fetch(url).then(resp => resp.json());
+
 }
